@@ -3,7 +3,7 @@ import api from './config/axios';
 
 export const authenticationService = ({ data, success, errors, after}) => {
   api
-    .get('https://react-etucz4.stackblitz.io/api/')
+    .post('https://react-etucz4.stackblitz.io/api/', data)
     .then((res) => success(res))
     .catch(({ response }) => {
       switch (response.status) {
@@ -13,7 +13,7 @@ export const authenticationService = ({ data, success, errors, after}) => {
           return errors['401'](response);
       }
 
-      return errors['unknown'](response);
+      return errors.unknown(response);
     })
     .then(() => after && after());
 };

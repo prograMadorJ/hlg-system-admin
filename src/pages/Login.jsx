@@ -57,9 +57,16 @@ export default function () {
         auth.setIsAuth(true);
       },
       errors: {
-        500: () => {},
-        401: () => {},
-        unknown: () => {},
+        500: () => {
+          
+        },
+        401: () => {
+          
+        
+        },
+        unknown: () => {
+          
+        },
       },
       after: () => setLoading(false),
     });
@@ -84,7 +91,7 @@ export default function () {
                 name="email"
                 {...register('email')}
                 isError={getFieldState('email').invalid}
-                value={'l@l.com'}
+              
               />
               <ErrorMessage errors={errors} name="email" />
             </Container>
