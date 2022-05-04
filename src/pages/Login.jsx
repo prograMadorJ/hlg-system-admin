@@ -14,6 +14,7 @@ import Card from '../components/Card';
 import Logo from '../components/Logo';
 import Button from '../components/Button';
 import Container from '../components/Container';
+import Snackbar from '../components/Snackbar';
 import { InputIcon } from '../components/Input';
 import ErrorMessage from '../components/forms/ErrorMessage';
 import { LinearLoading } from '../components/Loading';
@@ -25,11 +26,11 @@ export default function () {
   const [loading, setLoading] = useState(false);
   const auth = useAuth();
   const navigate = useNavigate();
+  const [showSnack, setShowSnack] = useState(false);
 
   useEffect(() => {
-    navigate(auth.isAuth ? '/' : '/login')
-  }, [auth])
-
+    navigate(auth.isAuth ? '/' : '/login');
+  }, [auth]);
 
   const schema = yup.object({
     email: yup
@@ -57,16 +58,9 @@ export default function () {
         auth.setIsAuth(true);
       },
       errors: {
-        500: () => {
-          
-        },
-        401: () => {
-          
-        
-        },
-        unknown: () => {
-          
-        },
+        500: () => {},
+        401: () => {},
+        unknown: () => {},
       },
       after: () => setLoading(false),
     });
@@ -74,6 +68,7 @@ export default function () {
 
   return (
     <PageContainer>
+      <a onClick={() => setShowSnack(v => !v)}>teste</a>
       <Header>
         <Logo />
         <Title>{globals.AppTitle}</Title>
@@ -91,7 +86,6 @@ export default function () {
                 name="email"
                 {...register('email')}
                 isError={getFieldState('email').invalid}
-              
               />
               <ErrorMessage errors={errors} name="email" />
             </Container>
@@ -117,6 +111,9 @@ export default function () {
           <LinearLoading text="aguarde..." isHidden={!loading} />
         </Card>
       </LoginContainer>
+      <Snackbar show={showSnack}>
+        Teste
+      </Snackbar>
     </PageContainer>
   );
 }
